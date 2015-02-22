@@ -14,7 +14,6 @@ namespace DotNetSamples
             IPAddress address;
 
             Assert.IsTrue(IPAddress.TryParse("10.2.12.123", out address));
-
             Assert.IsFalse(IPAddress.TryParse("10.2.12.1234", out address));
         }
 
@@ -37,6 +36,25 @@ namespace DotNetSamples
             ipv6Address = IPAddress.Parse("2001:db8:85a3::8a2e:370:7334");
             Assert.AreEqual(AddressFamily.InterNetworkV6, ipv6Address.AddressFamily);
         }
+
+        [TestMethod]
+        public void Ipv4Tov6()
+        {
+            IPAddress ipv4Address = IPAddress.Parse("10.3.5.156");
+            IPAddress ipv6Address = ipv4Address.MapToIPv6();
+            Assert.AreEqual(AddressFamily.InterNetworkV6, ipv6Address.AddressFamily);
+
+          
+        }
+
+        [TestMethod]
+        public void Ipv6Tov4()
+        {
+            IPAddress ipv6Address = IPAddress.Parse("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
+            IPAddress ipv4Address = ipv6Address.MapToIPv4();
+            Assert.AreEqual(AddressFamily.InterNetwork, ipv4Address.AddressFamily);
+        }
+
 
     }
 }

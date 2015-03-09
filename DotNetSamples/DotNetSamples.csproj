@@ -53,6 +53,7 @@
     <Compile Include="IPAddressExamples.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DnsSamples.cs" />
+    <Compile Include="SecureStringSamples.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

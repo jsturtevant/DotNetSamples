@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,7 +12,16 @@ namespace DotNetSamples
         [TestMethod]
         public void SecureStringCompare()
         {
+            string test = "test";
+            
             var secureString = new SecureString();
+
+            foreach (var c in test)
+            {
+                secureString.AppendChar(c);
+            }
+            Console.WriteLine(test);
+            
             secureString.AppendChar('s');
             secureString.AppendChar('e');
             secureString.AppendChar('c');
@@ -18,7 +29,21 @@ namespace DotNetSamples
             secureString.AppendChar('r');
             secureString.AppendChar('e');
 
-            // test to compare strings.
+
+            IntPtr secureStringPointer = IntPtr.Zero;
+            try
+            {
+                // copy to unmanaged memory and decrypt
+                secureStringPointer = Marshal.SecureStringToGlobalAllocUnicode(secureString);
+                
+                // use the pointer with a function like Win32 API logon
+                // full example (https://msdn.microsoft.com/en-us/library/system.runtime.interopservices.marshal.securestringtoglobalallocunicode(v=vs.110).aspx)
+                // returnValue = LogonUser(userName, domainName, secureStringPointer, LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, ref tokenHandle);
+            }
+            finally
+            {
+                Marshal.ZeroFreeBSTR(secureStringPointer);   
+            }
         }
 
         [TestMethod]

@@ -12,15 +12,8 @@ namespace DotNetSamples
         [TestMethod]
         public void SecureStringCompare()
         {
-            string test = "test";
-            
+            //  Could take input from console or another api
             var secureString = new SecureString();
-
-            foreach (var c in test)
-            {
-                secureString.AppendChar(c);
-            }
-            Console.WriteLine(test);
             
             secureString.AppendChar('s');
             secureString.AppendChar('e');
